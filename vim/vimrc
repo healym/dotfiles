@@ -3,7 +3,6 @@ set nocompatible
 set number
 set relativenumber
 set colorcolumn=81
-"set textwidth=80
 set history=50
 set ruler
 set showcmd
@@ -53,7 +52,4 @@ nnoremap J gj
 nnoremap K gk
 
 " COLOR
-set termguicolors  "uncomment to use truecolor
 colorscheme gruvbox
-hi colorcolumn ctermbg=11
-

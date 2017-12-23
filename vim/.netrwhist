@@ -1,0 +1,5 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/home/mhealy/suckless'
+let g:netrw_dirhist_2='/home/mhealy/suckless/st'
+let g:netrw_dirhist_3='/home/mhealy/.vim/colors'
