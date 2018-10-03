@@ -15,7 +15,7 @@
     ],
     "[markdown]": {
         "editor.wordWrap": "off"
-    }
+    },
     "window.restoreWindows": "none",
     "files.hotExit": "off",
     "workbench.startupEditor": "newUntitledFile"
