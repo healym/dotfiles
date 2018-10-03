@@ -4,7 +4,7 @@
     "editor.cursorBlinking": "phase",
     "editor.cursorStyle": "line-thin",
     "editor.renderWhitespace": "boundary",
-    "editor.fontFamily": "Fira Code Thin",
+    "editor.fontFamily": "Fira Code",
     "editor.fontLigatures": true,
     "editor.fontSize": 12,
     "window.titleBarStyle": "custom",
@@ -16,4 +16,7 @@
     "[markdown]": {
         "editor.wordWrap": "off"
     }
+    "window.restoreWindows": "none",
+    "files.hotExit": "off",
+    "workbench.startupEditor": "newUntitledFile"
 }
