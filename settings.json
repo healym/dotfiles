@@ -2,7 +2,7 @@
     "editor.wordWrap": "off",
     "workbench.colorTheme": "Cobalt2",
     "editor.cursorBlinking": "phase",
-    "editor.cursorStyle": "line-thin",
+    "editor.cursorStyle": "underline-thin",
     "editor.renderWhitespace": "boundary",
     "editor.fontFamily": "Fira Code",
     "editor.fontLigatures": true,
