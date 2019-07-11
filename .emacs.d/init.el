@@ -37,6 +37,7 @@ There are two things you can do about this warning:
  '(cursor-color "#cccccc")
  '(custom-emabled-themes (quote (wombat)))
  '(custom-enabled-themes (quote (atom-one-dark)))
+ '(custom-safe-themes (quote ("669e02142a56f63861288cc585bee81643ded48a19e36bfdf02b66d745bcc626" default)))
  '(face-font-family-alternatives (quote (("Monospace" "courier" "fixed" "IBM Plex Mono") ("courier" "CMU Typewriter Text" "fixed") ("Sans Serif" "helv" "helvetica" "arial" "fixed") ("helv" "helvetica" "arial" "fixed"))))
  '(fci-rule-color "#383838")
  '(foreground-color "#cccccc")
@@ -72,7 +73,7 @@ There are two things you can do about this warning:
  ;; If there is more than one, they won't work right.
  )
 (require 'rainbow-delimiters)
-(add-hook 'prog-mode #'rainbow-delimiters-mode)
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
 (rainbow-delimiters-mode t)
 (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-08"))
 (set-face-attribute 'default t :font "IBM Plex Mono-08")
@@ -84,8 +85,17 @@ There are two things you can do about this warning:
   (setq cursor-type (if (or god-local-mode buffer-read-only)
 			'box
 		      'bar)))
+(defun c/god-mode-update-cursor ()
+  (let ((limited-colors-p (> 257 (length (defined-colors)))))
+    (cond (god-local-mode (progn
+			    (set-face-background 'mode-line (if limited-colors-p "white" "#e9e2cb"))
+			    (set-face-background 'mode-line-inactive (if limited-colors "white" "#e9e2cb"))))
+	  (t (progn
+	       (set-face-background 'mode-line (if limited-colors-p "black" "#0a2832"))
+	       (set-face-background 'mode-line-inactive (if limited-colors-p "black" "#0a2832")))))))
 (add-hook 'god-mode-enabled-hook 'my-update-cursor)
 (add-hook 'god-mode-disabled-hook 'my-update-cursor)
 
 ;; GARBAGE
 (menu-bar-mode -1)
+(setq cursor-type 'bar)
