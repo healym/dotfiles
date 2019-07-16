@@ -98,4 +98,10 @@ There are two things you can do about this warning:
 
 ;; GARBAGE
 (menu-bar-mode -1)
-(setq cursor-type 'bar)
+(tool-bar-mode -1)
+(setq-default cursor-type 'bar)
+(set-default 'truncate-lines t)
+
+(add-hook 'prog-mode-hook (lambda ()
+			    (font-lock-add-keywords nil
+						    '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))))
