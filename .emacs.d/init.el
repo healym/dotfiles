@@ -65,6 +65,7 @@
 (require 'projectile)
 (setq projectile-indexing-method 'alien)
 (setq projectile-enable-caching t)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 (projectile-global-mode)
 
 (require 'helm)
