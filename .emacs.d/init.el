@@ -105,6 +105,7 @@
 
 
 ;; QoL DEFAULT CHANGES
+(load-theme 'atom-one-dark t)
 (menu-bar-mode nil)
 (tool-bar-mode nil)
 (setq-default cursor-type 'bar)
