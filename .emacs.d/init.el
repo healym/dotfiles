@@ -6,9 +6,9 @@
 
 (require 'package)
 (setq package-archives
-      '(("GNU ELPA"     . "https://elpa.gnu.org/packages/")
-	("MELPA Stable" . "https://stable.melpa.org/packages")
-	("MELPA"        . "https://melpa.org/packages"))
+      '(("MELPA Stable" . "https://stable.melpa.org/packages/")
+	("GNU ELPA"     . "https://elpa.gnu.org/packages/")
+	("MELPA"        . "https://melpa.org/packages/"))
       package-archive-priorities
       '(("GNU ELPA"     . 10)
 	("MELPA Stable" . 5)
@@ -49,12 +49,12 @@
 
 ;; MULTIPLE CURSORS
 (require 'multiple-cursors)
-(global-set-key (kdb "C-|") 'mc/edit-lines)
-(global-set-key (kdb "C->") 'mc/mark-next-like-this)
-(global-set-key (kdb "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kdb "C-c C-<") 'mc/mark-all-like-this)
-(global-set-key (kdb "C-S-<mouse-1>") 'mc/add-cursor-on-click)
-(define-key mc/keymap ("<return>") nil)
+(global-set-key (kbd "C-|") 'mc/edit-lines)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+(global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click)
+(define-key mc/keymap (kbd "<return>") nil)
 
 
 ;; AUTO-COMPLETION
@@ -69,7 +69,7 @@
 
 (require 'helm)
 (require 'helm-config)
-(global-set-key (kdb "C-c h") 'helm-command-prefix)
+(global-set-key (kbd "C-c h") 'helm-command-prefix)
 (global-unset-key (kbd "C-x c"))
 (helm-autoresize-mode 1)
 (global-set-key (kbd "M-x") 'helm-M-x)
@@ -81,7 +81,7 @@
 (global-set-key (kbd "<f8>") 'speedbar)
 
 ;; IDE
-(dumb-jump-mode) ;; C-M-g => jump to definition
+;;(dumb-jump-mode) ;; C-M-g => jump to definition
                  ;; C-M-p => jump to function call
 
 
@@ -106,10 +106,12 @@
 
 ;; QoL DEFAULT CHANGES
 (load-theme 'atom-one-dark t)
-(menu-bar-mode nil)
-(tool-bar-mode nil)
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
 (setq-default cursor-type 'bar)
 (set-default 'truncate-lines t)
+(global-hl-line-mode 1)
 
 (add-hook 'prog-mode-hook (lambda ()
 			    (font-lock-add-keywords nil
