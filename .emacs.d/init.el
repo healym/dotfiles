@@ -4,6 +4,73 @@
     (global-linum-mode t)
     (setq linum-format "%4d \u2502 ")))
 
+(require 'all-the-icons)
+
+;; FONT GARBAGE
+(defun fira-code-mode--make-alist (list)
+  "Generate prettify-symbols alist from LIST."
+  (let ((idx -1))
+    (mapcar
+     (lambda (s)
+       (setq idx (1+ idx))
+       (let* ((code (+ #Xe100 idx))
+          (width (string-width s))
+          (prefix ())
+          (suffix '(?\s (Br . Br)))
+          (n 1))
+     (while (< n width)
+       (setq prefix (append prefix '(?\s (Br . Bl))))
+       (setq n (1+ n)))
+     (cons s (append prefix suffix (list (decode-char 'ucs code))))))
+     list)))
+
+(defconst fira-code-mode--ligatures
+  '("www" "**" "***" "**/" "*>" "*/" "\\\\" "\\\\\\"
+    "{-" "[]" "::" ":::" ":=" "!!" "!=" "!==" "-}"
+    "--" "---" "-->" "->" "->>" "-<" "-<<" "-~"
+    "#{" "#[" "##" "###" "####" "#(" "#?" "#_" "#_("
+    ".-" ".=" ".." "..<" "..." "?=" "??" ";;" "/*"
+    "/**" "/=" "/==" "/>" "//" "///" "&&" "||" "||="
+    "|=" "|>" "^=" "$>" "++" "+++" "+>" "=:=" "=="
+    "===" "==>" "=>" "=>>" "<=" "=<<" "=/=" ">-" ">="
+    ">=>" ">>" ">>-" ">>=" ">>>" "<*" "<*>" "<|" "<|>"
+    "<$" "<$>" "<!--" "<-" "<--" "<->" "<+" "<+>" "<="
+    "<==" "<=>" "<=<" "<>" "<<" "<<-" "<<=" "<<<" "<~"
+    "<~~" "</" "</>" "~@" "~-" "~=" "~>" "~~" "~~>" "%%"
+    "x" ":" "+" "+" "*"))
+
+(defvar fira-code-mode--old-prettify-alist)
+
+(defun fira-code-mode--enable ()
+  "Enable Fira Code ligatures in current buffer."
+  (setq-local fira-code-mode--old-prettify-alist prettify-symbols-alist)
+  (setq-local prettify-symbols-alist (append (fira-code-mode--make-alist fira-code-mode--ligatures) fira-code-mode--old-prettify-alist))
+  (prettify-symbols-mode t))
+
+(defun fira-code-mode--disable ()
+  "Disable Fira Code ligatures in current buffer."
+  (setq-local prettify-symbols-alist fira-code-mode--old-prettify-alist)
+  (prettify-symbols-mode -1))
+
+(define-minor-mode fira-code-mode
+  "Fira Code ligatures minor mode"
+  :lighter " Fira Code"
+  (setq-local prettify-symbols-unprettify-at-point 'right-edge)
+  (if fira-code-mode
+      (fira-code-mode--enable)
+    (fira-code-mode--disable)))
+
+(defun fira-code-mode--setup ()
+  "Setup Fira Code Symbols"
+  (set-fontset-font t '(#Xe100 . #Xe16f) "Fira Code Symbol"))
+
+(provide 'fira-code-mode)
+(add-hook 'prog-mode-hook 'fira-code-mode)
+
+(add-to-list 'default-frame-alist '(font . "IBM Plex Mono-08"))
+(set-face-attribute 'default t :font "IBM Plex Mono-08")
+(set-face-attribute 'mode-line nil :font "DejaVu Sans Mono-10")
+
 (require 'package)
 (setq package-archives
       '(("MELPA Stable" . "https://stable.melpa.org/packages/")
@@ -14,7 +81,6 @@
 	("MELPA Stable" . 5)
 	("MELPA"        . 0)))
 (package-initialize)
-
 
 ;; LINE MAGIC
 (defun duplicate-line ()
@@ -115,15 +181,6 @@
 (set-default 'truncate-lines t)
 (global-hl-line-mode 1)
 
-(add-hook 'prog-mode-hook (lambda ()
-			    (font-lock-add-keywords nil
-						    '(("\\<\\(FIXME\\|TODO\\|BUG\\):" 1 font-lock-warning-face t)))))
-(require 'rainbow-delimiters)
-(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
-(rainbow-delimiters-mode t)
-(add-to-list 'default-frame-alist '(font . "IBM Plex Mono-08"))
-(set-face-attribute 'default t :font "IBM Plex Mono-08")
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -131,10 +188,13 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (sublimity ag helm-ag zenburn-theme swiper spacemacs-theme spacegray-theme rainbow-delimiters projectile powerline planet-theme plan9-theme org northcode-theme noctilux-theme multiple-cursors minimap material-theme magit lab-themes inverse-acme-theme inkpot-theme helm gruvbox-theme green-screen-theme gotham-theme god-mode flatland-theme flatland-black-theme fill-column-indicator darkokai-theme darkburn-theme cyberpunk-theme company-anaconda cheatsheet atom-one-dark-theme ample-theme))))
+    (doom-modeline sublimity ag helm-ag zenburn-theme swiper spacemacs-theme spacegray-theme rainbow-delimiters projectile powerline planet-theme plan9-theme org northcode-theme noctilux-theme multiple-cursors minimap material-theme magit lab-themes inverse-acme-theme inkpot-theme helm gruvbox-theme green-screen-theme gotham-theme god-mode flatland-theme flatland-black-theme fill-column-indicator darkokai-theme darkburn-theme cyberpunk-theme company-anaconda cheatsheet atom-one-dark-theme ample-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+
+;
