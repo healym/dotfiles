@@ -4,7 +4,16 @@
     (global-linum-mode t)
     (setq linum-format "%4d \u2502 ")))
 
-(require 'all-the-icons)
+(require 'package)
+(setq package-archives
+      '(("MELPA Stable" . "https://stable.melpa.org/packages/")
+	("GNU ELPA"     . "https://elpa.gnu.org/packages/")
+	("MELPA"        . "https://melpa.org/packages/"))
+      package-archive-priorities
+      '(("GNU ELPA"     . 10)
+	("MELPA Stable" . 5)
+	("MELPA"        . 0)))
+(package-initialize)
 
 ;; FONT GARBAGE
 (defun fira-code-mode--make-alist (list)
@@ -70,17 +79,7 @@
 (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-08"))
 (set-face-attribute 'default t :font "IBM Plex Mono-08")
 (set-face-attribute 'mode-line nil :font "DejaVu Sans Mono-10")
-
-(require 'package)
-(setq package-archives
-      '(("MELPA Stable" . "https://stable.melpa.org/packages/")
-	("GNU ELPA"     . "https://elpa.gnu.org/packages/")
-	("MELPA"        . "https://melpa.org/packages/"))
-      package-archive-priorities
-      '(("GNU ELPA"     . 10)
-	("MELPA Stable" . 5)
-	("MELPA"        . 0)))
-(package-initialize)
+(require 'all-the-icons)
 
 ;; LINE MAGIC
 (defun duplicate-line ()
@@ -183,7 +182,9 @@
 (setq-default cursor-type 'bar)
 (set-default 'truncate-lines t)
 (global-hl-line-mode 1)
-(doom-modeline t)
+
+(require 'doom-modeline)
+(doom-modeline-mode 1)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
