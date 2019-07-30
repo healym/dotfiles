@@ -91,6 +91,9 @@
 
 (global-set-key (kbd "C-S-d") 'duplicate-line)
 
+
+(global-set-key (kbd "M-n") (quote scroll-up-line))
+(global-set-key (kbd "M-p") (quote scroll-down-line))
 (defun move-line-down ()
    (interactive)
    (let ((col (current-column)))
@@ -187,9 +190,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(doom-modeline-mode t)
  '(package-selected-packages
    (quote
-    (doom-modeline sublimity ag helm-ag zenburn-theme swiper spacemacs-theme spacegray-theme rainbow-delimiters projectile powerline planet-theme plan9-theme org northcode-theme noctilux-theme multiple-cursors minimap material-theme magit lab-themes inverse-acme-theme inkpot-theme helm gruvbox-theme green-screen-theme gotham-theme god-mode flatland-theme flatland-black-theme fill-column-indicator darkokai-theme darkburn-theme cyberpunk-theme company-anaconda cheatsheet atom-one-dark-theme ample-theme))))
+    (smooth-scrolling doom-modeline sublimity ag helm-ag zenburn-theme swiper spacemacs-theme spacegray-theme rainbow-delimiters projectile powerline planet-theme plan9-theme org northcode-theme noctilux-theme multiple-cursors minimap material-theme magit lab-themes inverse-acme-theme inkpot-theme helm gruvbox-theme green-screen-theme gotham-theme god-mode flatland-theme flatland-black-theme fill-column-indicator darkokai-theme darkburn-theme cyberpunk-theme company-anaconda cheatsheet atom-one-dark-theme ample-theme))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
