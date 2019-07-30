@@ -83,7 +83,7 @@
 
 ;; IDE
 ;;(dumb-jump-mode) ;; C-M-g => jump to definition
-                 ;; C-M-p => jump to function call
+;; C-M-p => jump to function call
 
 
 ;; GOD MODE
@@ -109,6 +109,7 @@
 (load-theme 'atom-one-dark t)
 (menu-bar-mode -1)
 (tool-bar-mode -1)
+(setq inhibit-startup-screen t)
 (scroll-bar-mode -1)
 (setq-default cursor-type 'bar)
 (set-default 'truncate-lines t)
@@ -123,3 +124,17 @@
 (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-08"))
 (set-face-attribute 'default t :font "IBM Plex Mono-08")
 
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (sublimity ag helm-ag zenburn-theme swiper spacemacs-theme spacegray-theme rainbow-delimiters projectile powerline planet-theme plan9-theme org northcode-theme noctilux-theme multiple-cursors minimap material-theme magit lab-themes inverse-acme-theme inkpot-theme helm gruvbox-theme green-screen-theme gotham-theme god-mode flatland-theme flatland-black-theme fill-column-indicator darkokai-theme darkburn-theme cyberpunk-theme company-anaconda cheatsheet atom-one-dark-theme ample-theme))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
