@@ -180,6 +180,7 @@
 (setq-default cursor-type 'bar)
 (set-default 'truncate-lines t)
 (global-hl-line-mode 1)
+(doom-modeline t)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
