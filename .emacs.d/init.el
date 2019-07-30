@@ -74,12 +74,12 @@
   (set-fontset-font t '(#Xe100 . #Xe16f) "Fira Code Symbol"))
 
 (provide 'fira-code-mode)
-(add-hook 'prog-mode-hook 'fira-code-mode)
+;(add-hook 'prog-mode-hook 'fira-code-mode)
 
 (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-08"))
 (set-face-attribute 'default t :font "IBM Plex Mono-08")
 (set-face-attribute 'mode-line nil :font "DejaVu Sans Mono-10")
-(require 'all-the-icons)
+;(require 'all-the-icons)
 
 ;; LINE MAGIC
 (defun duplicate-line ()
@@ -158,9 +158,13 @@
 (require 'god-mode)
 (global-set-key (kbd "<escape>") 'god-mode)
 (defun my-update-cursor ()
-  (setq cursor-type (if (or god-local-mode buffer-read-only)
-			'box
-		      'bar)))
+  (progn
+    (setq cursor-type (if (or god-local-mode buffer-read-only)
+			  'box
+			'bar))
+    (blink-cursor-mode (if (or god-local-mode buffer-read-only)
+			   0
+			 1))))
 (defun c/god-mode-update-cursor ()
   (let ((limited-colors-p (> 257 (length (defined-colors)))))
     (cond (god-local-mode (progn
