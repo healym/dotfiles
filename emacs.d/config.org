@@ -190,7 +190,8 @@
 
 ** Ivy
 #+BEGIN_SRC emacs-lisp
-(use-package ivy :ensure t
+(use-package ivy
+  :ensure counsel
   :diminish (ivy-mode . "")
   :bind
   (:map ivy-mode-map
