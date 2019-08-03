@@ -75,33 +75,45 @@
 #+END_SRC
 
 ** Fonts
-*** Symbols
+*** Ligatures
 #+BEGIN_SRC emacs-lisp
-(require 'font-lock)
-(require 'font-lock+)
-
-(use-package all-the-icons
-  :ensure t
-  :config
-    (let ((font-dest (cl-case window-system
-                       (x (concat (or (getenv "XDG_DATA_HOME")
-		                      (concat (getenv "HOME") "/.local/share"))
-				  "/fonts/"))
-		       (mac (concat (getenv "HOME") "/Library/Fonts/" ))
-		       (ns (concat (getenv "HOME") "/Library/Fonts/" )))))
-      (unless (file-exists-p (concat font-dest "all-the-icons.ttf"))
-        (all-the-icons-install-fonts t))))
-#+END_SRC
-
-*** TODO Ligatures
-#+BEGIN_SRC emacs-lisp
-
+(when (window-system)
+  (set-frame-font "Fira Code"))
+(let ((alist '((33 . ".\\(?:\\(?:==\\|!!\\)\\|[!=]\\)")
+               (35 . ".\\(?:###\\|##\\|_(\\|[#(?[_{]\\)")
+               (36 . ".\\(?:>\\)")
+               (37 . ".\\(?:\\(?:%%\\)\\|%\\)")
+               (38 . ".\\(?:\\(?:&&\\)\\|&\\)")
+               (42 . ".\\(?:\\(?:\\*\\*/\\)\\|\\(?:\\*[*/]\\)\\|[*/>]\\)")
+               (43 . ".\\(?:\\(?:\\+\\+\\)\\|[+>]\\)")
+               (45 . ".\\(?:\\(?:-[>-]\\|<<\\|>>\\)\\|[<>}~-]\\)")
+               (46 . ".\\(?:\\(?:\\.[.<]\\)\\|[.=-]\\)")
+               (47 . ".\\(?:\\(?:\\*\\*\\|//\\|==\\)\\|[*/=>]\\)")
+               (48 . ".\\(?:x[a-zA-Z]\\)")
+               (58 . ".\\(?:::\\|[:=]\\)")
+               (59 . ".\\(?:;;\\|;\\)")
+               (60 . ".\\(?:\\(?:!--\\)\\|\\(?:~~\\|->\\|\\$>\\|\\*>\\|\\+>\\|--\\|<[<=-]\\|=[<=>]\\||>\\)\\|[*$+~/<=>|-]\\)")
+               (61 . ".\\(?:\\(?:/=\\|:=\\|<<\\|=[=>]\\|>>\\)\\|[<=>~]\\)")
+               (62 . ".\\(?:\\(?:=>\\|>[=>-]\\)\\|[=>-]\\)")
+               (63 . ".\\(?:\\(\\?\\?\\)\\|[:=?]\\)")
+               (91 . ".\\(?:]\\)")
+               (92 . ".\\(?:\\(?:\\\\\\\\\\)\\|\\\\\\)")
+               (94 . ".\\(?:=\\)")
+               (119 . ".\\(?:ww\\)")
+               (123 . ".\\(?:-\\)")
+               (124 . ".\\(?:\\(?:|[=|]\\)\\|[=>|]\\)")
+               (126 . ".\\(?:~>\\|~~\\|[>=@~-]\\)")
+               )
+             ))
+  (dolist (char-regexp alist)
+    (set-char-table-range composition-function-table (car char-regexp)
+                          `([,(cdr char-regexp) 0 font-shape-gstring]))))
 #+END_SRC
 
 *** Defaults
 #+BEGIN_SRC emacs-lisp
-(add-to-list 'default-frame-alist '(font . "IBM Plex Mono-08"))
-(set-face-attribute 'default t :font "IBM Plex Mono-08")
+(add-to-list 'default-frame-alist '(font . "IBM Plex Mono-09"))
+(set-face-attribute 'default t :font "IBM Plex Mono-09")
 (set-face-attribute 'mode-line nil :font "DejaVu Sans Mono-10")
 #+END_SRC
 
