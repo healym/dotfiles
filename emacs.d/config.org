@@ -2,12 +2,6 @@
 #+AUTHOR: Matthew Cooper Healy
 
 * Package Management
-** use-package
-#+BEGIN_SRC emacs-lisp
-(eval-when-compile
-  (require 'use-package))
-#+END_SRC
-
 ** Package Repositories
 #+BEGIN_SRC emacs-lisp
 (require 'package)
@@ -17,73 +11,91 @@
 	("MELPA"        . "https://melpa.org/packages/"))
       package-archive-priorities
       '(("GNU ELPA"     . 10)
-	("MELPA Stable" . 5)
 	("MELPA"        . 0)))
 (package-initialize)
+
+(add-to-list 'load-path "~/.emacs.d/lisp/") ; add local files
+#+END_SRC
+
+** use-package
+#+BEGIN_SRC emacs-lisp
+(eval-when-compile
+  (require 'use-package))
 #+END_SRC
 
 * Quality of Life Improvements
-** Fonts
-*** Ligatures
+** Line Numbers
 #+BEGIN_SRC emacs-lisp
-(defun fira-code-mode--make-alist (list)
-  "Generate prettify-symbols alist from LIST."
-  (let ((idx -1))
-    (mapcar
-     (lambda (s)
-       (setq idx (1+ idx))
-       (let* ((code (+ #Xe100 idx))
-          (width (string-width s))
-          (prefix ())
-          (suffix '(?\s (Br . Br)))
-          (n 1))
-     (while (< n width)
-       (setq prefix (append prefix '(?\s (Br . Bl))))
-       (setq n (1+ n)))
-     (cons s (append prefix suffix (list (decode-char 'ucs code))))))
-     list)))
+(if (version<= "26.0.50" emacs-version)
+  (global-display-line-numbers-mode)
+  (progn
+    (global-linum-mode t)
+    (setq linum-format "%4d \u2502 ")))
+#+END_SRC
 
-(defconst fira-code-mode--ligatures
-  '("www" "**" "***" "**/" "*>" "*/" "\\\\" "\\\\\\"
-    "{-" "[]" "::" ":::" ":=" "!!" "!=" "!==" "-}"
-    "--" "---" "-->" "->" "->>" "-<" "-<<" "-~"
-    "#{" "#[" "##" "###" "####" "#(" "#?" "#_" "#_("
-    ".-" ".=" ".." "..<" "..." "?=" "??" ";;" "/*"
-    "/**" "/=" "/==" "/>" "//" "///" "&&" "||" "||="
-    "|=" "|>" "^=" "$>" "++" "+++" "+>" "=:=" "=="
-    "===" "==>" "=>" "=>>" "<=" "=<<" "=/=" ">-" ">="
-    ">=>" ">>" ">>-" ">>=" ">>>" "<*" "<*>" "<|" "<|>"
-    "<$" "<$>" "<!--" "<-" "<--" "<->" "<+" "<+>" "<="
-    "<==" "<=>" "<=<" "<>" "<<" "<<-" "<<=" "<<<" "<~"
-    "<~~" "</" "</>" "~@" "~-" "~=" "~>" "~~" "~~>" "%%"
-    "x" ":" "+" "+" "*"))
+** Look
+*** Theme
+#+BEGIN_SRC emacs-lisp
+(use-package atom-one-dark-theme
+  :ensure t
+  :config
+    (load-theme 'atom-one-dark t))
+#+END_SRC
 
-(defvar fira-code-mode--old-prettify-alist)
+*** Modeline
+#+BEGIN_SRC emacs-lisp
+(use-package doom-modeline
+  :ensure t
+  :after all-the-icons
+  :hook (after-init . doom-modeline-mode))
 
-(defun fira-code-mode--enable ()
-  "Enable Fira Code ligatures in current buffer."
-  (setq-local fira-code-mode--old-prettify-alist prettify-symbols-alist)
-  (setq-local prettify-symbols-alist (append (fira-code-mode--make-alist fira-code-mode--ligatures) fira-code-mode--old-prettify-alist))
-  (prettify-symbols-mode t))
+#+END_SRC
 
-(defun fira-code-mode--disable ()
-  "Disable Fira Code ligatures in current buffer."
-  (setq-local prettify-symbols-alist fira-code-mode--old-prettify-alist)
-  (prettify-symbols-mode -1))
+*** Remove Default Trash
+#+BEGIN_SRC emacs-lisp
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+(tool-bar-mode -1)
+(setq inhibit-startup-screen t)
+#+END_SRC
 
-(define-minor-mode fira-code-mode
-  "Fira Code ligatures minor mode"
-  :lighter " Fira Code"
-  (setq-local prettify-symbols-unprettify-at-point 'right-edge)
-  (if fira-code-mode
-      (fira-code-mode--enable)
-    (fira-code-mode--disable)))
+*** Cursor
+#+BEGIN_SRC emacs-lisp
+(setq-default cursor-type 'bar)
+#+END_SRC
 
-(defun fira-code-mode--setup ()
-  "Setup Fira Code Symbols"
-  (set-fontset-font t '(#Xe100 . #Xe16f) "Fira Code Symbol"))
+*** Truncate, Don't Wrap
+#+BEGIN_SRC emacs-lisp
+(set-default 'truncate-lines t)
+#+END_SRC
 
-(provide 'fira-code-mode)
+*** Focus Line
+#+BEGIN_SRC emacs-lisp
+(global-hl-line-mode 1)
+#+END_SRC
+
+** Fonts
+*** Symbols
+#+BEGIN_SRC emacs-lisp
+(require 'font-lock)
+(require 'font-lock+)
+
+(use-package all-the-icons
+  :ensure t
+  :config
+    (let ((font-dest (cl-case window-system
+                       (x (concat (or (getenv "XDG_DATA_HOME")
+		                      (concat (getenv "HOME") "/.local/share"))
+				  "/fonts/"))
+		       (mac (concat (getenv "HOME") "/Library/Fonts/" ))
+		       (ns (concat (getenv "HOME") "/Library/Fonts/" )))))
+      (unless (file-exists-p (concat font-dest "all-the-icons.ttf"))
+        (all-the-icons-install-fonts t))))
+#+END_SRC
+
+*** TODO Ligatures
+#+BEGIN_SRC emacs-lisp
+
 #+END_SRC
 
 *** Defaults
@@ -93,59 +105,6 @@
 (set-face-attribute 'mode-line nil :font "DejaVu Sans Mono-10")
 #+END_SRC
 
-** VSCode Line Commands
-*** Duplication
-#+BEGIN_SRC emacs-lisp
-(defun duplicate-line ()
-  (interactive)
-  (save-mark-and-excursion
-    (beginning-of-line)
-    (insert (thing-at-point 'line t))))
-
-(global-set-key (kbd "C-S-d") 'duplicate-line)
-#+END_SRC
-
-*** Movement
-**** Down
-#+BEGIN_SRC emacs-lisp
-(defun move-line-down ()
-  (interactive)
-  (let ((col (current-column)))
-    (save-excursion
-      (forward-line)
-      (transpose-lines 1))
-    (forward-line)
-    (move-to-column col)))
-
-(global-set-key (kbd "C-S-j") 'move-line-down)
-#+END_SRC
-
-**** Up
-#+BEGIN_SRC emacs-lisp
-(defun move-line-up ()
-  (interactive)
-  (let ((col (current-column)))
-    (save-excursion
-      (forward-line)
-      (transpose-line -1))
-    (forward-line -1)
-    (move-to-column col)))
-
-(global-set-key (kbd "C-S-k") 'move-line-up)
-#+END_SRC
-
-** Cursors
-#+BEGIN_SRC emacs-lisp
-(use-package multiple-cursors
-  :ensure t
-  :config
-  (global-set-key (kbd "C-|") 'mc/edit-lines)
-  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-  (global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
-  (global-set-key (kbd "C-S-<mouse-1>") 'mc/add-cursor-on-click)
-  (define-key mc/keymap (kbd "<return>") nil))
-#+END_SRC
 * IDE-like Features
 ** Helm
 #+BEGIN_SRC emacs-lisp
@@ -169,8 +128,16 @@
   :custom
   (projectile-indexing-method 'alien)
   (projectile-enable-caching t)
-  :bind-kemap
+  :bind-keymap
   ("C-c p" . projectile-command-map)
   :config
   (projectile-global-mode))
+#+END_SRC
+
+** Company
+#+BEGIN_SRC emacs-lisp
+(use-package company
+  :ensure t
+  :config
+    (add-hook 'after-init-hook 'global-company-mode))
 #+END_SRC
