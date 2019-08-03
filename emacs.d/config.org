@@ -36,19 +36,22 @@
 ** Look
 *** Theme
 #+BEGIN_SRC emacs-lisp
-(use-package atom-one-dark-theme
+(use-package doom-themes
   :ensure t
   :config
-    (load-theme 'atom-one-dark t))
+    (setq doom-themes-enable-bold t
+          doom-themes-enable-italic t)
+    (load-theme 'doom-one t)
+    (doom-themes-visual-bell-config)
+    (doom-themes-treemacs-config)
+    (doom-themes-org-config))
 #+END_SRC
 
 *** Modeline
 #+BEGIN_SRC emacs-lisp
 (use-package doom-modeline
   :ensure t
-  :after all-the-icons
   :hook (after-init . doom-modeline-mode))
-
 #+END_SRC
 
 *** Remove Default Trash
@@ -112,24 +115,100 @@
 
 *** Defaults
 #+BEGIN_SRC emacs-lisp
-(add-to-list 'default-frame-alist '(font . "IBM Plex Mono-09"))
-(set-face-attribute 'default t :font "IBM Plex Mono-09")
+(add-to-list 'default-frame-alist '(font . "IBM Plex Mono-10"))
+(set-face-attribute 'default t :font "IBM Plex Mono-10")
 (set-face-attribute 'mode-line nil :font "DejaVu Sans Mono-10")
 #+END_SRC
 
 * IDE-like Features
-** Helm
+** File Explorer
 #+BEGIN_SRC emacs-lisp
-(use-package helm
+(use-package treemacs
   :ensure t
+  :defer t
   :init
-    (global-unset-key (kbd "C-x c"))
-  :bind (("C-x C-f" . helm-find-files)
-         ("M-x" . helm-M-x))
-  :custom
-    (helm-M-x-fuzzyj-match t)
+  (with-eval-after-load 'winum
+    (define-key winum-keypad (kbd "M-0") #'treemacs-select-window))
   :config
-    (helm-mode 1))
+  (progn
+    (setq treemacs-collapse-dirs                 (if treemacs-python-executable 3 0)
+          treemacs-deferred-git-apply-delay      0.5
+          treemacs-display-in-side-window        t
+          treemacs-eldoc-display                 t
+          treemacs-file-event-delay              5000
+          treemacs-file-follow-delay             0.2
+          treemacs-follow-after-init             t
+          treemacs-git-command-pipe              ""
+          treemacs-goto-tag-strategy             'refetch-index
+          treemacs-indentation                   2
+          treemacs-indentation-string            " "
+          treemacs-is-never-other-window         nil
+          treemacs-max-git-entries               5000
+          treemacs-missing-project-action        'ask
+          treemacs-no-png-images                 nil
+          treemacs-no-delete-other-windows       t
+          treemacs-project-follow-cleanup        nil
+          treemacs-persist-file                  (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
+          treemacs-position                      'left
+          treemacs-recenter-distance             0.1
+          treemacs-recenter-after-file-follow    nil
+          treemacs-recenter-after-tag-follow     nil
+          treemacs-recenter-after-project-jump   'always
+          treemacs-recenter-after-project-expand 'on-distance
+          treemacs-show-cursor                   nil
+          treemacs-show-hidden-files             t
+          treemacs-silent-filewatch              nil
+          treemacs-silent-refresh                nil
+          treemacs-sorting                       'alphabetic-desc
+          treemacs-space-between-root-nodes      t
+          treemacs-tag-follow-cleanup            t
+          treemacs-tag-follow-delay              1.5
+          treemacs-width                         35)
+
+    ;; The default width and height of the icons is 22 pixels. If you are
+    ;; using a Hi-DPI display, uncomment this to double the icon size.
+    ;;(treemacs-resize-icons 44)
+
+    (treemacs-follow-mode t)
+    (treemacs-filewatch-mode t)
+    (treemacs-fringe-indicator-mode t)
+    (pcase (cons (not (null (executable-find "git")))
+                 (not (null treemacs-python-executable)))
+      (`(t . t)
+       (treemacs-git-mode 'deferred))
+      (`(t . _)
+       (treemacs-git-mode 'simple))))
+  :bind
+  (:map global-map
+        ("M-0"       . treemacs-select-window)
+        ("C-x t 1"   . treemacs-delete-other-windows)
+        ("C-x t t"   . treemacs)
+        ("C-x t B"   . treemacs-bookmark)
+        ("C-x t C-t" . treemacs-find-file)
+        ("C-x t M-t" . treemacs-find-tag)))
+#+END_SRC
+
+** Ivy
+#+BEGIN_SRC emacs-lisp
+(use-package ivy :ensure t
+  :diminish (ivy-mode . "")
+  :bind
+  (:map ivy-mode-map
+   ("C-'" . ivy-avy))
+  :config
+  (ivy-mode 1)
+  ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
+  (setq ivy-use-virtual-buffers t)
+  ;; number of result lines to display
+  (setq ivy-height 10)
+  ;; does not count candidates
+  (setq ivy-count-format "")
+  ;; no regexp by default
+  (setq ivy-initial-inputs-alist nil)
+  ;; configure regexp engine.
+  (setq ivy-re-builders-alist
+	;; allow input not in order
+        '((t   . ivy--regex-ignore-order))))
 #+END_SRC
 
 ** Projectile
