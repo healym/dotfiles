@@ -215,7 +215,7 @@
 ** Projectile
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
-  :after helm
+  :after ivy
   :ensure t
   :custom
   (projectile-indexing-method 'alien)
