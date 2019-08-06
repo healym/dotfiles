@@ -215,11 +215,11 @@
 ** Projectile
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
-  :after ivy
   :ensure t
   :custom
   (projectile-indexing-method 'alien)
   (projectile-enable-caching t)
+  (projectile-completion-system 'ivy)
   :bind-keymap
   ("C-c p" . projectile-command-map)
   :config
