@@ -92,12 +92,12 @@
   :custom
   (mmm-global-mode 'maybe)
   :config
+  (set-face-background 'mmm-default-submode-face nil)
   (mmm-add-classes
    '((python-sql
       :submode sql-mode
-      :face mmm-code-submode-face
       :front "dedent(\"\"\""
-      :back "\"\"\")")))
+      :back "\"\"\".*)")))
   (mmm-add-mode-ext-class 'python-mode nil 'python-sql))
 
 #+END_SRC
