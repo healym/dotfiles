@@ -79,6 +79,8 @@
 
 *** Dashboard
 #+BEGIN_SRC emacs-lisp
+(defun no-linum ()
+  (display-line-numbers-mode -1))
 (use-package dashboard
   :ensure t
   :custom
@@ -90,11 +92,11 @@
                      (registers . 5)))
   (dashboard-set-heading-icons t)
   (dashboard-set-file-icons t)
-  (dashboard-banner-logo-title "welcome to emacs.")
-  (dashboard-startup-banner "~/.emacs.d/img/iso.png") ; set to path to image file to customize
+  (dashboard-startup-banner 'logo) ; set to path to image file to customize
 
   :config
-  (dashboard-setup-startup-hook))
+  (dashboard-setup-startup-hook)
+  (add-hook 'dashboard-mode-hook 'no-linum)) ; turn off line numbers for dashboard
 #+END_SRC
 
 ** Fonts
@@ -246,5 +248,5 @@
     '((t . ivy--regex-ignore-order)))	; allow input not in order
 
   :config
-  (ivy-mode 1))
+  (add-hook 'after-init-hook 'ivy-mode 1))
 #+END_SRC
