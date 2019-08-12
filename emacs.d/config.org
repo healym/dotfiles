@@ -77,12 +77,26 @@
 (global-hl-line-mode 1)
 #+END_SRC
 
+*** Dashboard
+#+BEGIN_SRC emacs-lisp
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook)
+  (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))) ; for emacs daemon
+#+END_SRC
+
 ** Fonts
 *** Defaults
 #+BEGIN_SRC emacs-lisp
 (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-08"))
 (set-face-attribute 'default t :font "IBM Plex Mono-08")
 (set-face-attribute 'mode-line nil :font "DejaVu Sans Mono-08")
+#+END_SRC
+
+*** Icons
+#+BEGIN_SRC emacs-lisp
+(use-package all-the-icons) ; recommend installing icons manually, this rarely works
 #+END_SRC
 
 ** SQL Highlighting
@@ -182,30 +196,6 @@
   :ensure t)
 #+END_SRC
 
-** Ivy
-#+BEGIN_SRC emacs-lisp
-(use-package ivy
-  :ensure counsel
-  :diminish (ivy-mode . "")
-  :bind
-  (:map ivy-mode-map
-   ("C-'" . ivy-avy))
-  :config
-  (ivy-mode 1)
-  ;; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
-  (setq ivy-use-virtual-buffers t)
-  ;; number of result lines to display
-  (setq ivy-height 10)
-  ;; does not count candidates
-  (setq ivy-count-format "")
-  ;; no regexp by default
-  (setq ivy-initial-inputs-alist nil)
-  ;; configure regexp engine.
-  (setq ivy-re-builders-alist
-	;; allow input not in order
-        '((t   . ivy--regex-ignore-order))))
-#+END_SRC
-
 ** Projectile
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
@@ -226,4 +216,24 @@
   :ensure t
   :config
     (add-hook 'after-init-hook 'global-company-mode))
+#+END_SRC
+** Ivy
+#+BEGIN_SRC emacs-lisp
+(use-package ivy
+  :ensure counsel                       ; also grab swiper
+  :diminish (ivy-mode . "")
+  :bind
+  (:map ivy-mode-map
+   ("C-'" . ivy-avy))
+
+  :custom
+  (ivy-use-virtual-buffers t)           ; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
+  (ivy-height 10)                       ; number of result lines to display
+  (ivy-count-format "")                 ; does not count candidates
+  (ivy-initial-inputs-alist nil)        ; no regexp by default
+  (ivy-re-builders-alist                ; configure regexp engine.
+    '((t . ivy--regex-ignore-order)))	; allow input not in order
+
+  :config
+  (ivy-mode 1))
 #+END_SRC
