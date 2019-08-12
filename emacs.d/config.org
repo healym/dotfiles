@@ -81,9 +81,20 @@
 #+BEGIN_SRC emacs-lisp
 (use-package dashboard
   :ensure t
+  :custom
+  (initial-buffer-choice (lambda () (get-buffer "*dashboard*"))) ; for emacs daemon
+  (dashboard-items '((recents . 5)
+                     (bookmarks . 5)
+                     (projects . 5)
+                     (agenda . 5)
+                     (registers . 5)))
+  (dashboard-set-heading-icons t)
+  (dashboard-set-file-icons t)
+  (dashboard-banner-logo-title "welcome to emacs.")
+  (dashboard-startup-banner 'logo) ; set to path to image file to customize
+
   :config
-  (dashboard-setup-startup-hook)
-  (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))) ; for emacs daemon
+  (dashboard-setup-startup-hook))
 #+END_SRC
 
 ** Fonts
