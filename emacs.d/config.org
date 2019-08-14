@@ -92,7 +92,7 @@
                      (registers . 5)))
   (dashboard-set-heading-icons t)
   (dashboard-set-file-icons t)
-  (dashboard-startup-banner 'logo) ; set to path to image file to customize
+  (dashboard-startup-banner "~/.emacs.d/img/logo.png") ; set to path to image file to customize
 
   :config
   (dashboard-setup-startup-hook)
