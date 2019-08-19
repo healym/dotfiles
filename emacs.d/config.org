@@ -137,6 +137,11 @@
   (mmm-add-mode-ext-class 'python-mode nil 'python-sql))
 
 #+END_SRC
+** Commenting
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-?") 'comment-or-uncomment-region)
+#+END_SRC
+
 * IDE-like Features
 ** File Explorer
 #+BEGIN_SRC emacs-lisp
