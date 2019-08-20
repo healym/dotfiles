@@ -39,12 +39,20 @@
 (use-package doom-themes
   :ensure t
   :config
-    (setq doom-themes-enable-bold t
-          doom-themes-enable-italic t)
-    (load-theme 'doom-one t)
-    (doom-themes-visual-bell-config)
-    (doom-themes-treemacs-config)
-    (doom-themes-org-config))
+  (setq doom-themes-enable-bold t
+        doom-themes-enable-italic t)
+  (load-theme 'doom-one t)
+  (doom-themes-visual-bell-config)
+  (doom-themes-treemacs-config)
+  (doom-themes-org-config))
+#+END_SRC
+
+*** Org-Mode
+#+BEGIN_SRC emacs-lisp
+(use-package org-bullets
+  :ensure t
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 #+END_SRC
 
 *** Modeline
@@ -118,7 +126,8 @@
 
 *** Icons
 #+BEGIN_SRC emacs-lisp
-(use-package all-the-icons) ; recommend installing icons manually, this rarely works
+(use-package all-the-icons
+  :ensure t) ; recommend installing icons manually, this rarely works
 #+END_SRC
 
 ** SQL Highlighting
@@ -128,10 +137,11 @@
   :custom
   (mmm-global-mode 'maybe)
   :config
-  (set-face-background 'mmm-default-submode-face nil)
+  (set-face-background 'mmm-default-submode-face "#23272e")
   (mmm-add-classes
    '((python-sql
       :submode sql-mode
+      :face mmm-code-submode-face
       :front "dedent(\"\"\""
       :back "\"\"\".*)")))
   (mmm-add-mode-ext-class 'python-mode nil 'python-sql))
@@ -242,17 +252,24 @@
 (use-package company
   :ensure t
   :config
-    (add-hook 'after-init-hook 'global-company-mode))
+  (add-hook 'after-init-hook 'global-company-mode))
 #+END_SRC
 
-*** Company-Jedi
+*** Company-Anaconda
 #+BEGIN_SRC emacs-lisp
-(use-package company-jedi
+(use-package company-anaconda
   :ensure t
+  :after 'company
   :config
-    (defun my/python-mode-hook ()
-      (add-to-list 'company-backends 'company-jedi))
-    (add-hook 'python-mode-hook 'my/python-mode-hook))
+  (add-to-list 'company-backends 'company-anaconda)
+  (add-hook 'python-mode-hook 'anaconda-mode))
+#+END_SRC
+
+** Flycheck
+#+BEGIN_SRC emacs-lisp
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
 #+END_SRC
 
 ** Ivy
@@ -285,4 +302,16 @@
   ("C-h f" . counsel-describe-function)
   ("C-h v" . counsel-describe-variable)
   ("C-c k" . counsel-ag))
+#+END_SRC
+** Magit
+#+BEGIN_SRC emacs-lisp
+(use-package magit
+  :ensure t)
+
+(use-package magithub
+  :after magit
+  :ensure t
+  :config
+  (magithub-feature-autoinject t)
+  (setq magithub-clone-default-directory "~/octokitty"))
 #+END_SRC
