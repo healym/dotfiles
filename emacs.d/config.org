@@ -244,6 +244,17 @@
   :config
     (add-hook 'after-init-hook 'global-company-mode))
 #+END_SRC
+
+*** Company-Jedi
+#+BEGIN_SRC emacs-lisp
+(use-package company-jedi
+  :ensure t
+  :config
+    (defun my/python-mode-hook ()
+      (add-to-list 'company-backends 'company-jedi))
+    (add-hook 'python-mode-hook 'my/python-mode-hook))
+#+END_SRC
+
 ** Ivy
 #+BEGIN_SRC emacs-lisp
 (use-package ivy
