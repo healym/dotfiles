@@ -22,7 +22,6 @@ done
 cp fonts/* ~/.local/share/fonts/
 cd /tmp
 
-# install unzip just in case the user doesn't already have it.
 wget "https://github.com/IBM/type/archive/master.zip"
 
 unzip master.zip
