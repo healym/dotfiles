@@ -384,3 +384,7 @@
   (magithub-feature-autoinject t)
   (setq magithub-clone-default-directory "~/octokitty"))
 #+END_SRC
+** Tab to Complete
+#+BEGIN_SRC emacs-lisp
+(setq tab-always-indent 'complete)
+#+END_SRC
