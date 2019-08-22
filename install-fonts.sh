@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 fonts_dir="${HOME}/.local/share/fonts"
 if [ ! -d "${fonts_dir}" ]; then
