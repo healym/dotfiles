@@ -238,6 +238,11 @@
 	    eshell-prompt-function 'epe-theme-lambda)))
 #+END_SRC
 
+** Kill Buffer and Window
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "C-c C-k") 'kill-buffer-and-window)
+#+END_SRC
+
 * IDE-like Features
 ** File Explorer
 #+BEGIN_SRC emacs-lisp
