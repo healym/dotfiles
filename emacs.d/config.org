@@ -211,7 +211,7 @@
    '((python-sql
       :submode sql-mode
       :face mmm-code-submode-face
-      :front "dedent(\"\"\""
+      :front "\\(dedent\\|SQL\\)(\"\"\""
       :back "\"\"\".*)")))
   (mmm-add-mode-ext-class 'python-mode nil 'python-sql))
 
@@ -219,6 +219,23 @@
 ** Commenting
 #+BEGIN_SRC emacs-lisp
 (global-set-key (kbd "C-?") 'comment-or-uncomment-region)
+#+END_SRC
+
+** Eshell
+#+BEGIN_SRC emacs-lisp
+  (use-package eshell
+    :ensure t
+    :commands (eshell eshell-command)
+    :config
+    (setenv "PAGER" "cat"))		; prevent `less`|`more` from breaking everything
+
+  (use-package eshell-prompt-extras
+    :ensure t
+    :init
+    (progn
+      (setq eshell-highlight-prompt nil
+	    epe-git-dirty-char ""
+	    eshell-prompt-function 'epe-theme-lambda)))
 #+END_SRC
 
 * IDE-like Features
