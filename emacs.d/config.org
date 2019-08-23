@@ -394,6 +394,14 @@
   ("C-h v" . counsel-describe-variable)
   ("C-c k" . counsel-ag))
 #+END_SRC
+** Swiper
+#+BEGIN_SRC emacs-lisp
+  (use-package swiper
+    :ensure t
+    :config
+    (global-set-key (kbd "C-s") 'swiper))	; replace standard search functionality
+#+END_SRC
+
 ** Magit
 #+BEGIN_SRC emacs-lisp
 (use-package magit
