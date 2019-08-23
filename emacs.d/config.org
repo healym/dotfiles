@@ -404,15 +404,16 @@
 
 ** Magit
 #+BEGIN_SRC emacs-lisp
-(use-package magit
-  :ensure t)
+  (use-package magit
+    :ensure t
+    (global-set-key (kbd "C-c b") 'magit-blame)) ; Add shortcut for blame
 
-(use-package magithub
-  :after magit
-  :ensure t
-  :config
-  (magithub-feature-autoinject t)
-  (setq magithub-clone-default-directory "~/octokitty"))
+  (use-package magithub
+    :after magit
+    :ensure t
+    :config
+    (magithub-feature-autoinject t)
+    (setq magithub-clone-default-directory "~/octokitty"))
 #+END_SRC
 ** Tab to Complete
 #+BEGIN_SRC emacs-lisp
