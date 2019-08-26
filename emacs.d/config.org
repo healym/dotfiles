@@ -129,7 +129,7 @@
 #+BEGIN_SRC emacs-lisp
 (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-08"))
 (set-face-attribute 'default t :font "IBM Plex Mono-08")
-(set-face-attribute 'mode-line nil :font "DejaVu Sans Mono-08")
+(set-face-attribute 'mode-line nil :font "DejaVu Sans Mono-10")
 #+END_SRC
 
 *** Icons
