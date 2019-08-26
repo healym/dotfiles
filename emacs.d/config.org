@@ -343,7 +343,9 @@
 (use-package company
   :ensure t
   :config
-  (add-hook 'after-init-hook 'global-company-mode))
+  (add-hook 'after-init-hook 'global-company-mode)
+  (define-key company-active-map (kbd "C-n") #'company-select-next)
+  (define-key company-active-map (kbd "C-p") #'company-select-previous))
 #+END_SRC
 
 *** Company-Anaconda
@@ -406,6 +408,7 @@
 #+BEGIN_SRC emacs-lisp
   (use-package magit
     :ensure t
+    :config
     (global-set-key (kbd "C-c b") 'magit-blame)) ; Add shortcut for blame
 
   (use-package magithub
