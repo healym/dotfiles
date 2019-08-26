@@ -235,6 +235,7 @@
     (progn
       (setq eshell-highlight-prompt nil
 	    epe-git-dirty-char ""
+	    epe-path-style 'single	; don't have a mess of a path
 	    eshell-prompt-function 'epe-theme-lambda)))
 #+END_SRC
 
