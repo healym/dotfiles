@@ -95,24 +95,22 @@
 
 *** Dashboard
 #+BEGIN_SRC emacs-lisp
-(defun no-linum ()
-  (display-line-numbers-mode -1))
-(use-package dashboard
-  :ensure t
-  :custom
-  (initial-buffer-choice (lambda () (get-buffer "*dashboard*"))) ; for emacs daemon
-  (dashboard-items '((recents . 5)
-                     (bookmarks . 5)
-                     (projects . 5)
-                     (agenda . 5)
-                     (registers . 5)))
-  (dashboard-set-heading-icons t)
-  (dashboard-set-file-icons t)
-  (dashboard-startup-banner "~/.emacs.d/img/axiom.png") ; set to path to image file to customize
-
-  :config
-  (dashboard-setup-startup-hook)
-  (add-hook 'dashboard-mode-hook 'no-linum)) ; turn off line numbers for dashboard
+  (defun no-linum ()
+    (display-line-numbers-mode -1))
+  (use-package dashboard
+    :ensure t
+    :config
+    (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*"))) ; for emacs daemon
+    (setq dashboard-items '((recents . 5)
+			    (bookmarks . 5)
+			    (projects . 5)
+			    (agenda . 5)
+			    (registers . 5)))
+    (setq dashboard-set-heading-icons t)
+    (setq dashboard-set-file-icons t)
+    (setq dashboard-startup-banner "~/.emacs.d/img/axiom.png") ; set to path to image file to customize
+    (dashboard-setup-startup-hook)
+    (add-hook 'dashboard-mode-hook 'no-linum)) ; turn off line numbers for dashboard
 #+END_SRC
 
 *** Rainbow Delimiters
@@ -227,7 +225,8 @@
     :ensure t
     :commands (eshell eshell-command)
     :config
-    (setenv "PAGER" "cat"))		; prevent `less`|`more` from breaking everything
+    (setenv "PAGER" "cat") ; prevent `less`|`more` from breaking everything
+    (add-hook 'eshell-hook (lambda () (linum-mode 0))))
 
   (use-package eshell-prompt-extras
     :ensure t
@@ -241,7 +240,7 @@
 
 ** Kill Buffer and Window
 #+BEGIN_SRC emacs-lisp
-(global-set-key (kbd "C-c C-k") 'kill-buffer-and-window)
+  (global-set-key (kbd "C-c C-k") 'kill-buffer-and-window)
 #+END_SRC
 
 * IDE-like Features
