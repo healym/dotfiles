@@ -81,7 +81,7 @@
 
 *** Cursor
 #+BEGIN_SRC emacs-lisp
-(setq-default cursor-type 'bar)
+(setq-default cursor-type 'box)
 #+END_SRC
 
 *** Truncate, Don't Wrap
@@ -169,9 +169,9 @@
       :config
       (add-hook 'prog-mode-hook 'pretty-mode)
       (pretty-deactivate-groups
-	'(:equality :ordering :ordering-double :ordering-triple :arrows :arrows-twoheaded :punctuation :logic :sets))
+	'(:equality :ordering :ordering-double :ordering-triple :arrows :arrows-twoheaded :punctuation :logic))
       (pretty-activate-groups
-	'(:sub-and-superscripts :greek :arithmetic-nary)))
+	'(:sub-and-superscripts :greek :arithmetic-nary :sets)))
 
 
     (defun fira-code-mode--make-alist (list)
