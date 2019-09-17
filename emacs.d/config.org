@@ -187,6 +187,7 @@
 						     ("return" .   ?⟼)
 						     ("yield" .    ?⟻)
 						     ("for" .      ?∀)
+						     ("is not" .   ?≢)
 						     ("is" .       ?≡)
 						     ;; Mypy (don't render as well, so left in hex)
 						     ("Dict" .     #x1d507)
