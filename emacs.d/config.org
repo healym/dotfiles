@@ -145,13 +145,15 @@
    (lambda ()
      (mapc (lambda (pair) (push pair prettify-symbols-alist))
 	   '(;; Syntax
-	     ("def" .      #x2131)
-	     ("not" .      #x2757)
-	     ("in" .       #x2208)
-	     ("not in" .   #x2209)
-	     ("return" .   #x27fc)
-	     ("yield" .    #x27fb)
-	     ;; Mypy
+	     ("def" .      ?ƒ)
+	     ("not" .      ?¬)
+	     ("in" .       ?∈)
+	     ("not in" .   ?∉)
+	     ("return" .   ?⟼)
+	     ("yield" .    ?⟻)
+	     ("for" .      ?∀)
+	     ("is" .       ?≡)
+	     ;; Mypy (don't render as well, so left in hex)
 	     ("Dict" .     #x1d507)
 	     ("List" .     #x2112)
 	     ("Tuple" .    #x2a02)
@@ -160,18 +162,18 @@
 	     ("Any" .      #x2754)
 	     ("Union" .    #x22c3)
 	     ;; Null
-	     ("null" .     #x8709)
-	     ("nil" .      #x8709)
-	     ("None" .     #x8709)))))
+	     ("null" .     ?∅)
+	     ("nil" .      ?∅)
+	     ("None" .     ?∅)))))
 
     (use-package pretty-mode
       :ensure t
       :config
       (add-hook 'prog-mode-hook 'pretty-mode)
       (pretty-deactivate-groups
-	'(:equality :ordering :ordering-double :ordering-triple :arrows :arrows-twoheaded :punctuation :logic))
+	'(:equality :ordering :ordering-double :ordering-triple :arrows :arrows-twoheaded :punctuation :logic :sets))
       (pretty-activate-groups
-	'(:sub-and-superscripts :greek :arithmetic-nary :sets)))
+	'(:sub-and-superscripts :greek :arithmetic-nary)))
 
 
     (defun fira-code-mode--make-alist (list)
