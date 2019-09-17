@@ -139,33 +139,6 @@
 
 *** Ligatures
 #+BEGIN_SRC emacs-lisp
-
-  (add-hook
-   'prog-mode-hook
-   (lambda ()
-     (mapc (lambda (pair) (push pair prettify-symbols-alist))
-	   '(;; Syntax
-	     ("def" .      ?ƒ)
-	     ("not" .      ?¬)
-	     ("in" .       ?∈)
-	     ("not in" .   ?∉)
-	     ("return" .   ?⟼)
-	     ("yield" .    ?⟻)
-	     ("for" .      ?∀)
-	     ("is" .       ?≡)
-	     ;; Mypy (don't render as well, so left in hex)
-	     ("Dict" .     #x1d507)
-	     ("List" .     #x2112)
-	     ("Tuple" .    #x2a02)
-	     ("Set" .      #x2126)
-	     ("Iterable" . #x1d50a)
-	     ("Any" .      #x2754)
-	     ("Union" .    #x22c3)
-	     ;; Null
-	     ("null" .     ?∅)
-	     ("nil" .      ?∅)
-	     ("None" .     ?∅)))))
-
     (use-package pretty-mode
       :ensure t
       :config
@@ -207,12 +180,34 @@
 	"<==" "<=>" "<=<" "<>" "<<" "<<-" "<<=" "<<<" "<~"
 	"<~~" "</" "</>" "~@" "~-" "~=" "~>" "~~" "~~>" "%%"))
 
+    (defconst fira-code-mode--custom-mathy-symbols '(("def" .      ?ƒ)
+                                                     ("not" .      ?¬)
+	 					     ("in" .       ?∈)
+						     ("not in" .   ?∉)
+						     ("return" .   ?⟼)
+						     ("yield" .    ?⟻)
+						     ("for" .      ?∀)
+						     ("is" .       ?≡)
+						     ;; Mypy (don't render as well, so left in hex)
+						     ("Dict" .     #x1d507)
+						     ("List" .     #x2112)
+						     ("Tuple" .    #x2a02)
+						     ("Set" .      #x2126)
+						     ("Iterable" . #x1d50a)
+						     ("Any" .      #x2754)
+						     ("Union" .    #x22c3)
+						     ;; Null
+						     ("null" .     ?∅)
+						     ("nil" .      ?∅)
+						     ("None" .     ?∅)))
+
     (defvar fira-code-mode--old-prettify-alist)
 
     (defun fira-code-mode--enable ()
       "Enable Fira Code ligatures in current buffer."
       (setq-local fira-code-mode--old-prettify-alist prettify-symbols-alist)
-      (setq-local prettify-symbols-alist (append (fira-code-mode--make-alist fira-code-mode--ligatures) fira-code-mode--old-prettify-alist))
+      (setq-local prettify-symbols-alist (append fira-code-mode--custom-mathy-symbols fira-code-mode--old-prettify-alist))
+      (setq-local prettify-symbols-alist (append (fira-code-mode--make-alist fira-code-mode--ligatures) prettify-symbols-alist))
       (prettify-symbols-mode t))
 
     (defun fira-code-mode--disable ()
