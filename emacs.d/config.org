@@ -129,7 +129,8 @@
   (add-to-list 'default-frame-alist '(font . "Fira Code-08"))
   (set-face-attribute 'default t :font "Fira Code-08")
   (set-face-attribute 'mode-line nil :font "Fira Code-10")
-  (set-face-attribute 'font-lock-comment-face :foreground "#5B6268" :slant italic :family "Fira Code RegularItalic")
+  (custom-set-faces
+    '(font-lock-comment-face ((t (:foreground "#5B6268" :slant italic :family "Fira Code RegularItalic")))))
 #+END_SRC
 
 *** Icons
