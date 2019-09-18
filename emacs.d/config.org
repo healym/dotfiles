@@ -183,7 +183,7 @@
 	"<~~" "</" "</>" "~@" "~-" "~=" "~>" "~~" "~~>" "%%"))
 
     (defconst fira-code-mode--custom-mathy-symbols '(("def" .      ?ƒ)
-                                                     ("not" .      ?¬)
+                                                     ("not " .      ?¬)
 	 					     ("in" .       ?∈)
 						     ("not in" .   ?∉)
 						     ("return" .   ?⟼)
