@@ -126,11 +126,11 @@
 ** Fonts
 *** Defaults
 #+BEGIN_SRC emacs-lisp
-  (add-to-list 'default-frame-alist '(font . "Fira Code-08"))
-  (set-face-attribute 'default t :font "Fira Code-08")
-  (set-face-attribute 'mode-line nil :font "Fira Code-10")
+  (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-08"))
+  (set-face-attribute 'default t :font "IBM Plex Mono-08")
+  (set-face-attribute 'mode-line nil :weight 'bold :font "IBM Plex Mono-10")
   (custom-set-faces
-    '(font-lock-comment-face ((t (:foreground "#5B6268" :slant italic :family "Fira Code RegularItalic")))))
+    '(font-lock-comment-face ((t (:foreground "#5B6268" :slant italic :family "IBM Plex Mono")))))
 #+END_SRC
 
 *** Icons
