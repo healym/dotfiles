@@ -138,7 +138,7 @@
     (setq dashboard-set-file-icons t)
     (setq dashboard-startup-banner "~/.emacs.d/img/axiom.png") ; set to path to image file to customize
     (dashboard-setup-startup-hook)
-    (setq dashboard-center-content)
+    (setq dashboard-center-content t)
     (add-hook 'dashboard-mode-hook 'no-linum)) ; turn off line numbers for dashboard
 #+END_SRC
 
