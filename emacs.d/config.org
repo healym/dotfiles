@@ -27,6 +27,12 @@
 #+END_SRC
 
 * Quality of Life Improvements
+** Trailing Whitespace
+#+BEGIN_SRC emacs-lisp
+(add-hook 'prog-mode-hook (lambda () (setq show-trailing-whitespace t)))
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+#+END_SRC
+
 ** Line Numbers
 #+BEGIN_SRC emacs-lisp
 (if (version<= "26.0.50" emacs-version)
@@ -126,8 +132,8 @@
 ** Fonts
 *** Defaults
 #+BEGIN_SRC emacs-lisp
-  (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-08"))
-  (set-face-attribute 'default t :font "IBM Plex Mono-08")
+  (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-10"))
+  (set-face-attribute 'default t :font "IBM Plex Mono-10")
   (set-face-attribute 'mode-line nil :weight 'bold :font "IBM Plex Mono-10")
   (custom-set-faces
     '(font-lock-comment-face ((t (:foreground "#5B6268" :slant italic :family "IBM Plex Mono")))))
