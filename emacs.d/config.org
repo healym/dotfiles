@@ -308,25 +308,6 @@
   (define-key company-active-map (kbd "C-p") #'company-select-previous))
 #+END_SRC
 
-* Eglot
-#+BEGIN_SRC emacs-lisp
-  (use-package eglot
-    :ensure t
-    :config
-    (add-hook 'python-mode-hook 'eglot-ensure)
-    (add-hook 'haskell-mode-hook 'eglot-ensure)
-    (add-hook 'ruby-mode-hook 'eglot-ensure)
-    (add-hook 'c-mode-hook 'eglot-ensure))
-#+END_SRC
-
-* PEP8
-#+BEGIN_SRC emacs-lisp
-  (use-package py-autopep8
-    :ensure t
-    :config
-    (add-hook 'python-mode-hook 'py-autopep8-enable-on-save))
-#+END_SRC
-
 * Ivy
 #+BEGIN_SRC emacs-lisp
 (use-package ivy
@@ -386,13 +367,26 @@
 (setq tab-always-indent 'complete)
 #+END_SRC
 
-* CIDER
+* LSP Features
+** Eglot
+#+BEGIN_SRC emacs-lisp
+  (use-package eglot
+    :ensure t
+    :config
+    (add-hook 'python-mode-hook 'eglot-ensure)
+    (add-hook 'haskell-mode-hook 'eglot-ensure)
+    (add-hook 'ruby-mode-hook 'eglot-ensure)
+    (add-hook 'c-mode-hook 'eglot-ensure))
+#+END_SRC
+
+* Language Specific IDE-Like Features
+** Clojure
 #+BEGIN_SRC emacs-lisp
   (use-package cider
     :ensure t)
 #+END_SRC
 
-* SLIME
+** Common Lisp
 #+BEGIN_SRC emacs-lisp
   (use-package slime
     :ensure t
@@ -400,3 +394,21 @@
     (setq inferior-lisp-program "/opt/sbcl/bin/sbcl")
     (setq slime-contribs '(slime-fancy)))
 #+END_SRC
+
+** Python
+*** PEP8
+#+BEGIN_SRC emacs-lisp
+  (use-package py-autopep8
+    :ensure t
+    :config
+    (add-hook 'python-mode-hook 'py-autopep8-enable-on-save))
+#+END_SRC
+
+** Haskell
+*** TODO
+
+** Ruby
+*** TODO
+
+** C/C++
+*** TODO
