@@ -7,11 +7,11 @@
 (require 'package)
 (setq package-archives
       '(("MELPA Stable" . "https://stable.melpa.org/packages/")
-	("GNU ELPA"     . "https://elpa.gnu.org/packages/")
-	("MELPA"        . "https://melpa.org/packages/"))
+        ("GNU ELPA"     . "https://elpa.gnu.org/packages/")
+	    ("MELPA"        . "https://melpa.org/packages/"))
       package-archive-priorities
       '(("GNU ELPA"     . 10)
-	("MELPA"        . 0)))
+	    ("MELPA"        . 0)))
 (package-initialize)
 
 (add-to-list 'load-path "~/.emacs.d/lisp/") ; add local files
@@ -67,7 +67,8 @@
 (use-package org-bullets
   :ensure t
   :config
-  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+  (add-hook 'org-mode-hook 'org-indent-mode))
 #+END_SRC
 
 *** Modeline
@@ -93,6 +94,24 @@
 *** Truncate, Don't Wrap
 #+BEGIN_SRC emacs-lisp
 (set-default 'truncate-lines t)
+(define-fringe-bitmap 'right-arrow
+  [#b00000000
+   #b00011000
+   #b00111100
+   #b01111110
+   #b01111110
+   #b00111100
+   #b00011000
+   #b00000000])
+(define-fringe-bitmap 'left-arrow
+  [#b00000000
+   #b00011000
+   #b00111100
+   #b01111110
+   #b01111110
+   #b00111100
+   #b00011000
+   #b00000000])
 #+END_SRC
 
 *** Focus Line
@@ -258,13 +277,6 @@
 
 #+END_SRC
 
-** Python PEP8-compliant comments
-#+BEGIN_SRC emacs-lisp
-  (add-hook 'python-mode-hook
-    (lambda ()
-      (setq comment-start " # ")))
-#+END_SRC
-
 ** Eshell
 #+BEGIN_SRC emacs-lisp
   (use-package eshell
@@ -284,7 +296,8 @@
 	    eshell-prompt-function 'epe-theme-lambda)))
 #+END_SRC
 
-* Projectile
+* Project-Management
+** Projectile
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
   :ensure t
@@ -298,7 +311,8 @@
   (projectile-global-mode))
 #+END_SRC
 
-* Company
+* Auto-Completion
+** Company
 #+BEGIN_SRC emacs-lisp
 (use-package company
   :ensure t
@@ -308,7 +322,8 @@
   (define-key company-active-map (kbd "C-p") #'company-select-previous))
 #+END_SRC
 
-* Ivy
+* Searching and Fuzzy-Finding
+** Ivy
 #+BEGIN_SRC emacs-lisp
 (use-package ivy
   :ensure t
@@ -329,7 +344,7 @@
   (ivy-mode 1))
 #+END_SRC
 
-* Counsel
+** Counsel
 #+BEGIN_SRC emacs-lisp
 (use-package counsel
   :ensure t
@@ -340,7 +355,7 @@
   ("C-c k" . counsel-ag)
   ("C-h a" . counsel-apropos))
 #+END_SRC
-* Swiper
+** Swiper
 #+BEGIN_SRC emacs-lisp
   (use-package swiper
     :ensure t
@@ -348,7 +363,7 @@
     (global-set-key (kbd "C-s") 'swiper))	; replace standard search functionality
 #+END_SRC
 
-* Magit
+* Git/Github
 #+BEGIN_SRC emacs-lisp
   (use-package magit
     :ensure t
@@ -403,6 +418,14 @@
     :config
     (add-hook 'python-mode-hook 'py-autopep8-enable-on-save))
 #+END_SRC
+
+*** Python PEP8-compliant comments
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'python-mode-hook
+    (lambda ()
+      (setq comment-start " # ")))
+#+END_SRC
+
 
 ** Haskell
 *** TODO
