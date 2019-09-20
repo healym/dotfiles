@@ -308,21 +308,23 @@
   (define-key company-active-map (kbd "C-p") #'company-select-previous))
 #+END_SRC
 
-** Company-Anaconda
+* Eglot
 #+BEGIN_SRC emacs-lisp
-(use-package company-anaconda
-  :ensure t
-  :after 'company
-  :config
-  (add-to-list 'company-backends 'company-anaconda)
-  (add-hook 'python-mode-hook 'anaconda-mode))
+  (use-package eglot
+    :ensure t
+    :config
+    (add-hook 'python-mode-hook 'eglot-ensure)
+    (add-hook 'haskell-mode-hook 'eglot-ensure)
+    (add-hook 'ruby-mode-hook 'eglot-ensure)
+    (add-hook 'c-mode-hook 'eglot-ensure))
 #+END_SRC
 
-* Flycheck
+* PEP8
 #+BEGIN_SRC emacs-lisp
-(use-package flycheck
-  :ensure t
-  :init (global-flycheck-mode))
+  (use-package py-autopep8
+    :ensure t
+    :config
+    (add-hook 'python-mode-hook 'py-autopep8-enable-on-save))
 #+END_SRC
 
 * Ivy
