@@ -258,6 +258,13 @@
 
 #+END_SRC
 
+** Python PEP8-compliant comments
+#+BEGIN_SRC emacs-lisp
+  (add-hook 'python-mode-hook
+    (lambda ()
+      (setq comment-start " # ")))
+#+END_SRC
+
 ** Eshell
 #+BEGIN_SRC emacs-lisp
   (use-package eshell
@@ -277,8 +284,7 @@
 	    eshell-prompt-function 'epe-theme-lambda)))
 #+END_SRC
 
-* IDE-like Features
-** Projectile
+* Projectile
 #+BEGIN_SRC emacs-lisp
 (use-package projectile
   :ensure t
@@ -292,7 +298,7 @@
   (projectile-global-mode))
 #+END_SRC
 
-** Company
+* Company
 #+BEGIN_SRC emacs-lisp
 (use-package company
   :ensure t
@@ -302,7 +308,7 @@
   (define-key company-active-map (kbd "C-p") #'company-select-previous))
 #+END_SRC
 
-*** Company-Anaconda
+** Company-Anaconda
 #+BEGIN_SRC emacs-lisp
 (use-package company-anaconda
   :ensure t
@@ -312,14 +318,14 @@
   (add-hook 'python-mode-hook 'anaconda-mode))
 #+END_SRC
 
-** Flycheck
+* Flycheck
 #+BEGIN_SRC emacs-lisp
 (use-package flycheck
   :ensure t
   :init (global-flycheck-mode))
 #+END_SRC
 
-** Ivy
+* Ivy
 #+BEGIN_SRC emacs-lisp
 (use-package ivy
   :ensure t
@@ -340,7 +346,7 @@
   (ivy-mode 1))
 #+END_SRC
 
-** Counsel
+* Counsel
 #+BEGIN_SRC emacs-lisp
 (use-package counsel
   :ensure t
@@ -351,7 +357,7 @@
   ("C-c k" . counsel-ag)
   ("C-h a" . counsel-apropos))
 #+END_SRC
-** Swiper
+* Swiper
 #+BEGIN_SRC emacs-lisp
   (use-package swiper
     :ensure t
@@ -359,7 +365,7 @@
     (global-set-key (kbd "C-s") 'swiper))	; replace standard search functionality
 #+END_SRC
 
-** Magit
+* Magit
 #+BEGIN_SRC emacs-lisp
   (use-package magit
     :ensure t
@@ -373,18 +379,18 @@
     (magithub-feature-autoinject t)
     (setq magithub-clone-default-directory "~/octokitty"))
 #+END_SRC
-** Tab to Complete
+* Tab to Complete
 #+BEGIN_SRC emacs-lisp
 (setq tab-always-indent 'complete)
 #+END_SRC
 
-** CIDER
+* CIDER
 #+BEGIN_SRC emacs-lisp
   (use-package cider
     :ensure t)
 #+END_SRC
 
-** SLIME
+* SLIME
 #+BEGIN_SRC emacs-lisp
   (use-package slime
     :ensure t
