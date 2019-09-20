@@ -133,7 +133,7 @@
 			          (agenda . 5)
 			          (registers . 5)))
     (setq dashboard-set-heading-icons t)
-    (dashboard-modify-hading-icons '((recents . "file-text")))
+    (dashboard-modify-heading-icons '((recents . "file-text")))
     (setq dashboard-set-navigator t)
     (setq dashboard-set-file-icons t)
     (setq dashboard-startup-banner "~/.emacs.d/img/axiom.png") ; set to path to image file to customize
