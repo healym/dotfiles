@@ -299,6 +299,16 @@
 	    eshell-prompt-function 'epe-theme-lambda)))
 #+END_SRC
 
+** Quick Reload
+#+BEGIN_SRC emacs-lisp
+(defun revert-buffer-no-confirm ()
+  "Revert the current buffer without asking permission"
+  (interactive)
+  (revert-buffer :ignore-auto :noconfirm))
+
+(global-set-key (kbd "<f5>") 'revert-buffer-no-confirm)
+#+END_SRC
+
 * Project-Management
 ** Projectile
 #+BEGIN_SRC emacs-lisp
