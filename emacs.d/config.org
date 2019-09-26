@@ -19,11 +19,12 @@
 
 ** use-package
 #+BEGIN_SRC emacs-lisp
-(eval-when-compile
-  (require 'use-package)
   (unless (package-installed-p 'use-package)
     (package-refresh-contents)
-    (package-install 'use-package)))
+      (package-install 'use-package))
+
+  (eval-when-compile
+    (require 'use-package))
 #+END_SRC
 
 * Quality of Life Improvements
@@ -346,7 +347,7 @@
    ("C-'" . ivy-avy))
 
   :custom
-  (ivy-use-virtual-buffers t)           ; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer’.
+  (ivy-use-virtual-buffers t)           ; add ‘recentf-mode’ and bookmarks to ‘ivy-switch-buffer'.
   (ivy-height 10)                       ; number of result lines to display
   (ivy-count-format "")                 ; does not count candidates
   (ivy-initial-inputs-alist nil)        ; no regexp by default
@@ -368,6 +369,7 @@
   ("C-c k" . counsel-ag)
   ("C-h a" . counsel-apropos))
 #+END_SRC
+
 ** Swiper
 #+BEGIN_SRC emacs-lisp
   (use-package swiper
@@ -390,6 +392,7 @@
     (magithub-feature-autoinject t)
     (setq magithub-clone-default-directory "~/octokitty"))
 #+END_SRC
+
 * Tab to Complete
 #+BEGIN_SRC emacs-lisp
 (setq tab-always-indent 'complete)
@@ -447,3 +450,13 @@
 
 ** C/C++
 *** TODO
+
+** New Languages
+*** Julia
+**** TODO
+
+*** Crystal
+**** TODO
+
+*** Elixr
+**** TODO
