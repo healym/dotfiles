@@ -409,13 +409,15 @@
 #+END_SRC
 
 * Language Specific IDE-Like Features
-** Clojure
+** Pure Triad
+*** Lisp
+**** Clojure
 #+BEGIN_SRC emacs-lisp
   (use-package cider
     :ensure t)
 #+END_SRC
 
-** Common Lisp
+**** Common Lisp
 #+BEGIN_SRC emacs-lisp
   (use-package slime
     :ensure t
@@ -424,8 +426,15 @@
     (setq slime-contribs '(slime-fancy)))
 #+END_SRC
 
-** Python
-*** PEP8
+*** Haskell
+**** TODO
+
+*** SmallTalk
+**** TODO
+
+** Productivity Triad
+*** Python
+**** Auto-PEP8 On Save
 #+BEGIN_SRC emacs-lisp
   (use-package py-autopep8
     :ensure t
@@ -433,28 +442,25 @@
     (add-hook 'python-mode-hook 'py-autopep8-enable-on-save))
 #+END_SRC
 
-*** Python PEP8-compliant comments
+**** PEP8-compliant comments
 #+BEGIN_SRC emacs-lisp
   (add-hook 'python-mode-hook
     (lambda ()
       (setq comment-start " # ")))
 #+END_SRC
 
-** Haskell
-*** TODO
+*** Ruby
+**** TODO
 
-** Ruby
-*** TODO
+*** Elixir
+**** TODO
 
-** C/C++
-*** TODO
-
-** New Languages
+** Other
 *** Julia
 **** TODO
 
 *** Crystal
 **** TODO
 
-*** Elixr
+*** C/C++
 **** TODO
