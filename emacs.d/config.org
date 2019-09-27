@@ -418,19 +418,59 @@
 * Language Specific IDE-Like Features
 ** Pure Triad
 *** Lisp
-**** Clojure
-#+BEGIN_SRC emacs-lisp
-  (use-package cider
-    :ensure t)
-#+END_SRC
-
-**** Common Lisp
 #+BEGIN_SRC emacs-lisp
   (use-package slime
     :ensure t
     :config
     (setq inferior-lisp-program "/opt/sbcl/bin/sbcl")
     (setq slime-contribs '(slime-fancy)))
+
+  (use-package lispy
+    :ensure t)
+
+  (use-package parinfer
+    :ensure t
+    :after lispy
+    :bind
+    (("C-," . parinfer-toggle-mode))
+    :init
+    (progn
+      (setq parinfer-extensions
+            '(defaults
+              pretty-parens
+              evil
+              lispy
+              paredit
+              smart-tab
+              smart-yank))
+      (add-hook 'clojure-mode-hook #'parinfer-mode)
+      (add-hook 'emacs-lisp-mode-hook #'parinfer-mode)
+      (add-hook 'common-lisp-mode-hook #'parinfer-mode)
+      (add-hook 'scheme-mode-hook #'parinfer-mode)
+      (add-hook 'lisp-mode-hook #'parinfer-mode)))
+
+  (use-package cider
+    :ensure t
+    :after lispy parinfer
+    :config
+    (add-hook 'cider-mode-hook 'eldoc-mode)
+    (setq cider-repl-pop-to-buffer-on-connect t)
+
+    ;; Switch automatically to errors for CIDER
+    (setq cider-show-error-buffer t)
+    (setq cider-auto-select-error-buffer t)
+    (setq cider-repl-history-file "~/.emacs.d/cider-history")
+    (setq cider-repl-wrap-history t) ; wrap history when navigating
+
+    ;; use paredit in repl
+    (add-hook 'cider-repl-mode-hook 'paredit-mode)
+
+    ;; Use clojure mode for other extensions
+    (add-to-list 'auto-mode-alist '("\\.edn$" . clojure-mode))
+    (add-to-list 'auto-mode-alist '("\\.boot$" . clojure-mode))
+    (add-to-list 'auto-mode-alist '("\\.cljs.*$" . clojure-mode))
+    (add-to-list 'auto-mode-alist '("lein-env" . enh-ruby-mode)))
+
 #+END_SRC
 
 *** Haskell
@@ -475,16 +515,10 @@
     (add-hook 'ruby-mode-hook 'robe-mode)
     (push 'company-robe company-backends))
 
-  (use-package yard
-    :ensure t
-    :config
-    (add-hook 'ruby-mode-hook 'yard-mode))
-
   (use-package enh-ruby-mode
     :ensure t
     :config
     (add-hook 'enh-ruby-mode-hook 'robe-mode)
-    (add-hook 'enh-ruby-mode-hook 'yard-mode)
     (add-to-list 'auto-mode-alist '("\\(?:\\.rb\\|ru\\|rake\\|thor\\|jbuilder\\|gemspec\\|podspec\\|/\\(?:Gem\\|Rake\\|Cap\\|Thor\\|Vagrant\\|Guard\\|Pod\\)file\\)\\'" . enh-ruby-mode)))
 #+END_SRC
 
