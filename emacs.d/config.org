@@ -183,99 +183,99 @@
 
 *** Ligatures
 #+BEGIN_SRC emacs-lisp
-    (use-package pretty-mode
-      :ensure t
-      :config
-      (add-hook 'fira-code-mode-hook 'pretty-mode)
-      (pretty-deactivate-groups
-	'(:equality :ordering :ordering-double :ordering-triple :arrows :arrows-twoheaded :punctuation :logic :sets))
-      (pretty-activate-groups
-	'(:sub-and-superscripts :greek :arithmetic-nary)))
+  (use-package pretty-mode
+    :ensure t
+    :config
+    (add-hook 'fira-code-mode-hook 'pretty-mode)
+    (pretty-deactivate-groups
+      '(:equality :ordering :ordering-double :ordering-triple :arrows :arrows-twoheaded :punctuation :logic :sets))
+    (pretty-activate-groups
+      '(:sub-and-superscripts :greek :arithmetic-nary)))
 
 
-    (defun fira-code-mode--make-alist (list)
-      "Generate prettify-symbols alist from LIST."
-      (let ((idx -1))
-	(mapcar
-	 (lambda (s)
-	   (setq idx (1+ idx))
-	   (let* ((code (+ #Xe100 idx))
-	      (width (string-width s))
-	      (prefix ())
-	      (suffix '(?\s (Br . Br)))
-	      (n 1))
-	 (while (< n width)
-	   (setq prefix (append prefix '(?\s (Br . Bl))))
-	   (setq n (1+ n)))
-	 (cons s (append prefix suffix (list (decode-char 'ucs code))))))
-	 list)))
+  (defun fira-code-mode--make-alist (list)
+    "Generate prettify-symbols alist from LIST."
+    (let ((idx -1))
+      (mapcar
+       (lambda (s)
+         (setq idx (1+ idx))
+         (let* ((code (+ #Xe100 idx))
+            (width (string-width s))
+            (prefix ())
+            (suffix '(?\s (Br . Br)))
+            (n 1))
+       (while (< n width)
+         (setq prefix (append prefix '(?\s (Br . Bl))))
+         (setq n (1+ n)))
+       (cons s (append prefix suffix (list (decode-char 'ucs code))))))
+       list)))
 
-    (defconst fira-code-mode--ligatures
-      '("www" "**" "***" "**/" "*>" "*/" "\\\\" "\\\\\\"
-	"{-" "[]" "::" ":::" ":=" "!!" "!=" "!==" "-}"
-	"--" "---" "-->" "->" "->>" "-<" "-<<" "-~"
-	"#{" "#[" "##" "###" "####" "#(" "#?" "#_" "#_("
-	".-" ".=" ".." "..<" "..." "?=" "??" ";;" "/*"
-	"/**" "/=" "/==" "/>" "//" "///" "&&" "||" "||="
-	"|=" "|>" "^=" "$>" "++" "+++" "+>" "=:=" "=="
-	"===" "==>" "=>" "=>>" "<=" "=<<" "=/=" ">-" ">="
-	">=>" ">>" ">>-" ">>=" ">>>" "<*" "<*>" "<|" "<|>"
-	"<$" "<$>" "<!--" "<-" "<--" "<->" "<+" "<+>" "<="
-	"<==" "<=>" "<=<" "<>" "<<" "<<-" "<<=" "<<<" "<~"
-	"<~~" "</" "</>" "~@" "~-" "~=" "~>" "~~" "~~>" "%%"))
+  (defconst fira-code-mode--ligatures
+    '("www" "**" "***" "**/" "*>" "*/" "\\\\" "\\\\\\"
+      "{-" "[]" "::" ":::" ":=" "!!" "!=" "!==" "-}"
+      "--" "---" "-->" "->" "->>" "-<" "-<<" "-~"
+      "#{" "#[" "##" "###" "####" "#(" "#?" "#_" "#_("
+      ".-" ".=" ".." "..<" "..." "?=" "??" ";;" "/*"
+      "/**" "/=" "/==" "/>" "//" "///" "&&" "||" "||="
+      "|=" "|>" "^=" "$>" "++" "+++" "+>" "=:=" "=="
+      "===" "==>" "=>" "=>>" "<=" "=<<" "=/=" ">-" ">="
+      ">=>" ">>" ">>-" ">>=" ">>>" "<*" "<*>" "<|" "<|>"
+      "<$" "<$>" "<!--" "<-" "<--" "<->" "<+" "<+>" "<="
+      "<==" "<=>" "<=<" "<>" "<<" "<<-" "<<=" "<<<" "<~"
+      "<~~" "</" "</>" "~@" "~-" "~=" "~>" "~~" "~~>" "%%"))
 
-    (defconst fira-code-mode--custom-mathy-symbols '(("def" .      ?ƒ)
-                                                     ("not " .      ?¬)
-	 					     ("in" .       ?∈)
-						     ("not in" .   ?∉)
-						     ("return" .   ?⟼)
-						     ("yield" .    ?⟻)
-						     ("for" .      ?∀)
-						     ("is not" .   ?≢)
-						     ("is" .       ?≡)
-						     ;; Mypy (don't render as well, so left in hex)
-						     ("Dict" .     #x1d507)
-						     ("List" .     #x2112)
-						     ("Tuple" .    #x2a02)
-						     ("Set" .      #x2126)
-						     ("Iterable" . #x1d50a)
-						     ("Any" .      #x2754)
-						     ("Union" .    #x22c3)
-						     ;; Null
-						     ("null" .     ?∅)
-						     ("nil" .      ?∅)
-						     ("None" .     ?∅)))
+  (defconst fira-code-mode--custom-mathy-symbols '(("def" .      ?ƒ)
+                                                   ("not " .      ?¬)
+                                                   ("in" .       ?∈)
+                                                   ("not in" .   ?∉)
+                                                   ("return" .   ?⟼)
+                                                   ("yield" .    ?⟻)
+                                                   ("for" .      ?∀)
+                                                   ("is not" .   ?≢)
+                                                   ("is" .       ?≡)
+                                                   ;; Mypy (don't render as well, so left in hex)
+                                                   ("Dict" .     #x1d507)
+                                                   ("List" .     #x2112)
+                                                   ("Tuple" .    #x2a02)
+                                                   ("Set" .      #x2126)
+                                                   ("Iterable" . #x1d50a)
+                                                   ("Any" .      #x2754)
+                                                   ("Union" .    #x22c3)
+                                                   ;; Null
+                                                   ("null" .     ?∅)
+                                                   ("nil" .      ?∅)
+                                                   ("None" .     ?∅)))
 
-    (defvar fira-code-mode--old-prettify-alist)
+  (defvar fira-code-mode--old-prettify-alist)
 
-    (defun fira-code-mode--enable ()
-      "Enable Fira Code ligatures in current buffer."
-      (setq-local fira-code-mode--old-prettify-alist prettify-symbols-alist)
-      (setq-local prettify-symbols-alist (append fira-code-mode--custom-mathy-symbols fira-code-mode--old-prettify-alist))
-      (setq-local prettify-symbols-alist (append (fira-code-mode--make-alist fira-code-mode--ligatures) prettify-symbols-alist))
-      (prettify-symbols-mode t))
+  (defun fira-code-mode--enable ()
+    "Enable Fira Code ligatures in current buffer."
+    (setq-local fira-code-mode--old-prettify-alist prettify-symbols-alist)
+    (setq-local prettify-symbols-alist (append fira-code-mode--custom-mathy-symbols fira-code-mode--old-prettify-alist))
+    (setq-local prettify-symbols-alist (append (fira-code-mode--make-alist fira-code-mode--ligatures) prettify-symbols-alist))
+    (prettify-symbols-mode t))
 
-    (defun fira-code-mode--disable ()
-      "Disable Fira Code ligatures in current buffer."
-      (setq-local prettify-symbols-alist fira-code-mode--old-prettify-alist)
-      (prettify-symbols-mode -1))
+  (defun fira-code-mode--disable ()
+    "Disable Fira Code ligatures in current buffer."
+    (setq-local prettify-symbols-alist fira-code-mode--old-prettify-alist)
+    (prettify-symbols-mode -1))
 
-    (define-minor-mode fira-code-mode
-      "Fira Code ligatures minor mode"
-      :lighter " Fira Code"
-      (setq-local prettify-symbols-unprettify-at-point 'right-edge)
-      (if fira-code-mode
-	  (fira-code-mode--enable)
-	(fira-code-mode--disable)))
+  (define-minor-mode fira-code-mode
+    "Fira Code ligatures minor mode"
+    :lighter " Fira Code"
+    (setq-local prettify-symbols-unprettify-at-point 'right-edge)
+    (if fira-code-mode
+        (fira-code-mode--enable)
+      (fira-code-mode--disable)))
 
-    (defun fira-code-mode--setup ()
-      "Setup Fira Code Symbols"
-      (set-fontset-font t '(#Xe100 . #Xe16f) "Fira Code Symbol"))
+  (defun fira-code-mode--setup ()
+    "Setup Fira Code Symbols"
+    (set-fontset-font t '(#Xe100 . #Xe16f) "Fira Code Symbol"))
 
-    (provide 'fira-code-mode)
-    (add-hook 'prog-mode-hook 'fira-code-mode)
+  (provide 'fira-code-mode)
+  (add-hook 'prog-mode-hook 'fira-code-mode)
 
-    (global-set-key (kbd "<f7>") 'fira-code-mode)
+  (global-set-key (kbd "<f7>") 'fira-code-mode)
 #+END_SRC
 
 ** SQL Highlighting
