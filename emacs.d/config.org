@@ -166,6 +166,43 @@
 #+END_SRC
 
 ** Fonts
+*** Installing
+#+BEGIN_SRC emacs-lisp
+  (defun install-plex ()
+    (message "Installing IBM Plex -- You might want to grab a cup of something...")
+    (call-process "/bin/bash" nil nil nil "-c" "wget 'https://github.com/IBM/type/archive/master.zip' -O ~/.local/share/fonts/plex.zip")
+    (call-process "/bin/bash" nil nil nil "-c" "unzip ~/.local/share/fonts/plex.zip -d ~/.local/share/fonts")
+    (call-process "/bin/bash" nil nil nil "-c" "rm ~/.local/share/fonts/plex.zip")
+    (message "Installed IBM Plex"))
+
+  (defun install-fira-symbol ()
+    (message "Installing FiraCode Symbol")
+    (copy-file "~/.emacs.d/fonts/FiraCode-Regular-Symbol.otf" "~/.local/share/fonts/FiraCode-Regular-Symbol.otf")
+    (message "Installed FiraCode Symbol"))
+
+  (defun install-all-the-icons ()
+    (message "Installing all-the-icons")
+    (copy-directory "~/.emacs.d/fonts/all-the-icons" "~/.local/share/fonts/all-the-icons")
+    (message "Installed all-the-icons"))
+
+
+  (defun cache-fonts ()
+    (message "Running fc-cache -f")
+    (call-process "/bin/bash" nil nil nil "-c" "fc-cache -f")
+    (message "Fonts installed"))
+
+  (unless (and (member "IBM Plex Mono" (font-family-list))
+               (member "Fira Code Symbol" (font-family-list))
+               (member "all-the-icons" (font-family-list)))
+    (progn
+      (unless (file-directory-p "~/.local/share/fonts")
+        (make-directory "~/.local/share/fonts" :parents))
+      (install-plex)
+      (install-fira-symbol)
+      (install-all-the-icons)
+      (cache-fonts)))
+#+END_SRC
+
 *** Defaults
 #+BEGIN_SRC emacs-lisp
   (add-to-list 'default-frame-alist '(font . "IBM Plex Mono-10"))
@@ -444,27 +481,6 @@
 
   (use-package lispy
     :ensure t)
-
-  (use-package parinfer
-    :ensure t
-    :after lispy
-    :bind
-    (("C-," . parinfer-toggle-mode))
-    :init
-    (progn
-      (setq parinfer-extensions
-            '(defaults
-              pretty-parens
-              evil
-              lispy
-              paredit
-              smart-tab
-              smart-yank))
-      (add-hook 'clojure-mode-hook #'parinfer-mode)
-      (add-hook 'emacs-lisp-mode-hook #'parinfer-mode)
-      (add-hook 'common-lisp-mode-hook #'parinfer-mode)
-      (add-hook 'scheme-mode-hook #'parinfer-mode)
-      (add-hook 'lisp-mode-hook #'parinfer-mode)))
 
   (use-package cider
     :ensure t
