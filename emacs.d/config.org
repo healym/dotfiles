@@ -52,15 +52,30 @@
 
 *** Theme
 #+BEGIN_SRC emacs-lisp
-(use-package doom-themes
-  :ensure t
-  :config
-  (setq doom-themes-enable-bold t
-        doom-themes-enable-italic t)
-  (load-theme 'doom-one t)
-  (doom-themes-visual-bell-config)
-  (doom-themes-treemacs-config)
-  (doom-themes-org-config))
+  (use-package doom-themes
+    :ensure t
+    :config
+    (setq doom-themes-enable-bold t
+          doom-themes-enable-italic t)
+    (load-theme 'doom-one t)
+    (doom-themes-visual-bell-config)
+    (doom-themes-treemacs-config)
+    (doom-themes-org-config))
+
+  (defvar *dark-mode* t)
+
+  (defun toggle-light-dark ()
+  "Toggle between light and dark color themes"
+    (interactive)
+    (if *dark-mode*
+      (progn
+        (load-theme 'doom-one-light)
+        (setq *dark-mode* nil))
+      (progn
+        (load-theme 'doom-one)
+        (setq *dark-mode* t))))
+
+  (global-set-key (kbd "<f6>") 'toggle-light-dark)
 #+END_SRC
 
 *** Org-Mode
@@ -171,7 +186,7 @@
     (use-package pretty-mode
       :ensure t
       :config
-      (add-hook 'prog-mode-hook 'pretty-mode)
+      (add-hook 'fira-code-mode-hook 'pretty-mode)
       (pretty-deactivate-groups
 	'(:equality :ordering :ordering-double :ordering-triple :arrows :arrows-twoheaded :punctuation :logic :sets))
       (pretty-activate-groups
@@ -259,6 +274,8 @@
 
     (provide 'fira-code-mode)
     (add-hook 'prog-mode-hook 'fira-code-mode)
+
+    (global-set-key (kbd "<f7>") 'fira-code-mode)
 #+END_SRC
 
 ** SQL Highlighting
@@ -268,7 +285,6 @@
   :custom
   (mmm-global-mode 'maybe)
   :config
-  (set-face-background 'mmm-default-submode-face "#23272e")
   (mmm-add-classes
    '((python-sql
       :submode sql-mode
