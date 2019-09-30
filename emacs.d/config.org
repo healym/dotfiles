@@ -186,7 +186,7 @@
   (use-package pretty-mode
     :ensure t
     :config
-    (add-hook 'prog-mode-hook 'pretty-mode)
+    (add-hook 'fira-code-mode-hook 'pretty-mode)
     (pretty-deactivate-groups
       '(:equality :ordering :ordering-double :ordering-triple :arrows :arrows-twoheaded :punctuation :logic :sets :function))
     (pretty-activate-groups
@@ -273,9 +273,9 @@
     (set-fontset-font t '(#Xe100 . #Xe16f) "Fira Code Symbol"))
 
   (provide 'fira-code-mode)
-  (add-hook 'pretty-mode-hook 'fira-code-mode)
+  (add-hook 'prog-mode-hook 'fira-code-mode)
 
-  (global-set-key (kbd "<f7>") 'pretty-mode)
+  (global-set-key (kbd "<f7>") 'fira-code-mode)
 #+END_SRC
 
 ** SQL Highlighting
@@ -285,6 +285,7 @@
   :custom
   (mmm-global-mode 'maybe)
   :config
+  (set-face-background 'mmm-default-submode-face nil)
   (mmm-add-classes
    '((python-sql
       :submode sql-mode
