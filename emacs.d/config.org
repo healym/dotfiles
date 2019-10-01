@@ -309,8 +309,8 @@
     "Setup Fira Code Symbols"
     (set-fontset-font t '(#Xe100 . #Xe16f) "Fira Code Symbol"))
 
-  (provide 'fira-code-mode)
-  (add-hook 'prog-mode-hook 'fira-code-mode)
+  ;; (provide 'fira-code-mode)
+  ;; (add-hook 'prog-mode-hook 'fira-code-mode)
 
   (global-set-key (kbd "<f7>") 'fira-code-mode)
 #+END_SRC
