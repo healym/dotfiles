@@ -57,10 +57,10 @@
       :config
       (setq doom-themes-enable-bold t
             doom-themes-enable-italic t)
-      (load-theme 'doom-one t)
+      (load-theme 'doom-one-light t)
       (doom-themes-visual-bell-config))
 
-    (defvar *dark-mode* t)
+    (defvar *dark-mode* nil)
 
     (defun toggle-light-dark ()
     "Toggle between light and dark color themes"
@@ -267,12 +267,15 @@
   (defconst fira-code-mode--custom-mathy-symbols '(("def" .      ?ƒ)
                                                    ("not " .     ?¬)
                                                    ("in" .       ?∈)
+                                                   ("IN" .       ?∈)
                                                    ("not in" .   ?∉)
                                                    ("return" .   ?⇑)
                                                    ("yield" .    ?⟻)
                                                    ("for" .      ?∀)
                                                    ("is not" .   ?≢)
+                                                   ("IS NOT" .   ?≢)
                                                    ("is" .       ?≡)
+                                                   ("IS" .       ?≡)
                                                    ;; Mypy (don't render as well, so left in hex)
                                                    ("Dict" .     #x1d507)
                                                    ("List" .     #x2112)
@@ -283,6 +286,7 @@
                                                    ("Union" .    #x22c3)
                                                    ;; Null
                                                    ("null" .     ?∅)
+                                                   ("NULL" .     ?∅)
                                                    ("nil" .      ?∅)
                                                    ("None" .     ?∅)))
 
@@ -312,8 +316,8 @@
     "Setup Fira Code Symbols"
     (set-fontset-font t '(#Xe100 . #Xe16f) "Fira Code Symbol"))
 
-  ;; (provide 'fira-code-mode)
-  ;; (add-hook 'prog-mode-hook 'fira-code-mode)
+  (provide 'fira-code-mode)
+  (add-hook 'prog-mode-hook 'fira-code-mode)
 
   (global-set-key (kbd "<f7>") 'fira-code-mode)
 #+END_SRC
